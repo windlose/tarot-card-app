@@ -1,0 +1,334 @@
+/* 简洁版塔罗牌样式 - 移除所有耗性能特效 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Microsoft YaHei', serif;
+    background: #0a0a1a;
+    color: #e8e0ff;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 背景 */
+.scene-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.scene-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scene-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(to top, rgba(10, 10, 26, 0.9) 0%, transparent 100%);
+}
+
+/* 粒子 - 减少数量 */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #fbbf24;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 4s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* UI层 */
+.game-ui {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.top-title {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.top-title h1 {
+    font-size: 2em;
+    color: #fbbf24;
+    letter-spacing: 10px;
+}
+
+/* 对话框 */
+.dialog {
+    position: fixed;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 500px;
+    width: 85%;
+    padding: 12px 25px;
+    background: rgba(20, 15, 40, 0.9);
+    border: 1px solid #8b5cf6;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 10;
+}
+
+.dialog p {
+    font-size: 1em;
+    color: #fbbf24;
+}
+
+/* 牌阵 */
+.cards-area {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.cards-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+}
+
+.tarot-card {
+    width: 55px;
+    height: 85px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.tarot-card-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #4338ca, #1e1b4b);
+    border: 2px solid #8b5cf6;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fbbf24;
+}
+
+.tarot-card:hover {
+    transform: translateY(-15px) scale(1.1);
+    z-index: 10;
+}
+
+.tarot-card:hover .tarot-card-inner {
+    border-color: #fbbf24;
+}
+
+.tarot-card.selected {
+    transform: translateY(-25px) scale(1.2);
+    z-index: 20;
+}
+
+.tarot-card.faded {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+/* 移动到中心的动画 */
+.tarot-card.moving-to-center {
+    position: fixed !important;
+    z-index: 100;
+    animation: moveToCenter 1s ease forwards;
+}
+
+@keyframes moveToCenter {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.8);
+    }
+}
+
+/* 结果弹窗 */
+.result-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 26, 0.95);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    text-align: center;
+    padding: 30px;
+    max-width: 400px;
+}
+
+.flip-card {
+    width: 120px;
+    height: 180px;
+    margin: 0 auto 25px;
+    perspective: 800px;
+}
+
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+.flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-back,
+.flip-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    border: 2px solid #fbbf24;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-back {
+    background: linear-gradient(145deg, #4338ca, #1e1b4b);
+    font-size: 40px;
+    color: #fbbf24;
+}
+
+.flip-front {
+    background: #1e1b4b;
+    transform: rotateY(180deg);
+    padding: 15px;
+}
+
+.card-num {
+    color: #a78bfa;
+    font-size: 0.9em;
+}
+
+.card-emoji {
+    font-size: 45px;
+    margin: 10px 0;
+}
+
+.card-name {
+    color: #fbbf24;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.reading h2 {
+    color: #fbbf24;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+.position-tag {
+    display: inline-block;
+    padding: 4px 15px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    margin-bottom: 15px;
+}
+
+.position-tag.upright {
+    background: #10b981;
+    color: white;
+}
+
+.position-tag.reversed {
+    background: #ef4444;
+    color: white;
+}
+
+.reading p {
+    color: #c4b5fd;
+    line-height: 1.6;
+}
+
+.again-btn {
+    margin-top: 20px;
+    padding: 12px 35px;
+    background: transparent;
+    color: #fbbf24;
+    border: 2px solid #fbbf24;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.again-btn:hover {
+    background: #fbbf24;
+    color: #0a0a1a;
+}
+
+/* 响应式 */
+@media (max-width: 500px) {
+    .tarot-card {
+        width: 42px;
+        height: 65px;
+    }
+
+    .tarot-card-inner {
+        font-size: 16px;
+    }
+}

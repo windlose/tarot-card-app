@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔮 群星的愚言 - 塔罗牌占卜</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 视频背景 -->
+    <div class="scene-background">
+        <video autoplay muted loop playsinline class="scene-video">
+            <source src="8k40_.mp4" type="video/mp4">
+        </video>
+        <div class="scene-overlay"></div>
+    </div>
+
+    <!-- 浮动粒子 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 游戏UI层 -->
+    <div class="game-ui">
+        <!-- 顶部标题 -->
+        <div class="top-title">
+            <h1>群星的愚言</h1>
+        </div>
+
+        <!-- 对话框 -->
+        <div class="dialog" id="dialog">
+            <p id="dialogText">「旅者，命运的星轮正在转动... 请选择属于你的那张牌」</p>
+        </div>
+
+        <!-- 底部牌阵区域 -->
+        <div class="cards-area">
+            <div class="cards-row" id="cardsRow">
+                <!-- 牌通过JS生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果弹窗 -->
+    <div class="result-modal hidden" id="resultModal">
+        <div class="modal-content">
+            <div class="flip-card" id="flipCard">
+                <div class="flip-inner">
+                    <div class="flip-back">✦</div>
+                    <div class="flip-front" id="flipFront">
+                        <span class="card-num" id="cardNum">0</span>
+                        <span class="card-emoji" id="cardEmoji">🌟</span>
+                        <span class="card-name" id="cardName">愚者</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reading">
+                <h2 id="readingName">愚者</h2>
+                <span class="position-tag" id="positionTag">正位</span>
+                <p id="readingText">牌义...</p>
+            </div>
+
+            <button class="again-btn" id="againBtn">✦ 再次占卜 ✦</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
